@@ -6,6 +6,6 @@
 // })
 
 module.exports = {
-    "secretKey": process.env.secretKey,
-    "mongoUrl": process.env.mongoUrl
+    "secretKey": "1234567654321",
+    "mongoUrl": "mongodb+srv://cypher-admin:fgcot157813@cluster0.dzl4n.mongodb.net/conFusion"
 }
