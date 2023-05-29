@@ -20,7 +20,6 @@ db.once('open', function () {
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var phoneRouter = require('./routes/phoneRouter');
 var productRouter = require('./routes/productRouter');
 var uploadRouter = require('./routes/uploadRouter');
 var orderRouter = require('./routes/orderRouter');
@@ -55,7 +54,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/phones', phoneRouter);
 app.use('/products', productRouter);
 app.use('/orders', orderRouter);
 app.use('/imageUpload', uploadRouter);

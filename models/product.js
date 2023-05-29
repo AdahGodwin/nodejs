@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // Will add the Currency type to the Mongoose Schema types
- require('mongoose-currency').loadType(mongoose);
  var Currency = mongoose.Types.Currency;
 
 var commentSchema = new Schema({
@@ -31,6 +30,14 @@ var productSchema = new Schema({
         type: String,
         required: true
     },
+    storeId: {
+        type: String,
+        required: true
+    },
+    storeName: {
+        type: String,
+        required: true
+    },
     description: {
         type: String
     },
@@ -41,7 +48,7 @@ var productSchema = new Schema({
         type: Number
     },
     comments:[commentSchema],
-    image: {
+    imageUrl: {
         type: String,
     },
     category:{

@@ -2,62 +2,59 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
 
-
-var cartSchema = new Schema({
-    name: {
+var AddressSchema = new Schema({
+    street: {
         type: String,
-        required: true
+        default: ""
     },
-    description: {
-        type: String
-    },
-    rating: {
-        type: Number
-    },
-    price: {
-        type: Number
-    },
-    image: {
+    city: {
         type: String,
+        default: "",
     },
-    category:{
+    state: {
         type: String,
-        required: true
+        default: "",
     },
-    featured: {
-        type: Boolean,
-    },
-    quantity: {
-        type: Number,
-        min: 1
+    country: {
+        type: String,
+        default: "",
     }
-    
-}, {
-    timestamps: true
 });
-
 
 var User = new Schema({
     firstname: {
-      type: String,
-      default: ''
-    },
-    lastname: {
-      type: String,
+        type: String,
         default: ''
     },
-    admin: {
+    lastname: {
+        type: String,
+        default: ''
+    },
+    isSeller: {
         type: Boolean,
         default: false
     },
-    cart: [cartSchema],
-    address: {
+    address: AddressSchema,
+    email: {
         type: String,
-        default: ''
+        default: '',
+    },
+    mobileNumber: {
+        type: String,
+        default: '',
+    },
+    storeId: {
+        type: String,
+        required: false,
+    },
+    storeName: {
+        type: String,
+        required: false,
     }
+
 });
 
-User.methods.getName = function() {
+User.methods.getName = function () {
     return (this.firstname + ' ' + this.lastname);
 };
 

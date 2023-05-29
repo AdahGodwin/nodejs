@@ -21,7 +21,7 @@ productRouter.route('/')
     .catch((err) => next(err));
 })
 
-.post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, function (req, res, next) {
+.post(cors.corsWithOptions, function (req, res, next) {
     Product.create(req.body, function (err, product) {
         if (err) throw err;
         res.writeHead(200, {
@@ -32,7 +32,7 @@ productRouter.route('/')
     });
 })
 
-.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, function (req, res, next) {
+.delete(cors.corsWithOptions, function (req, res, next) {
     Product.deleteMany({}, function (err, resp) {
         if (err) throw err;
         res.json(resp);
@@ -52,7 +52,7 @@ productRouter.route('/:Id')
     .catch((err) => next(err));
 })
 
-.put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, function (req, res, next) {
+.put(cors.corsWithOptions, function (req, res, next) {
     Product.findByIdAndUpdate(req.params.Id, {
         $set: req.body
     }, {
@@ -63,7 +63,7 @@ productRouter.route('/:Id')
     });
 })
 
-.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, function (req, res, next) {
+.delete(cors.corsWithOptions, function (req, res, next) {
         Product.findByIdAndRemove(req.params.Id, function (err, resp) {
         if (err) throw err;
         res.json(resp);
@@ -109,14 +109,14 @@ productRouter.route('/:Id/comments')
     .catch((err) => next(err));
 })
 .delete(cors.corsWithOptions, function(req, res, next) {
-    Product.findById(req.params.Id, function (err, dish) {
+    Product.findById(req.params.Id, function (err, product) {
         if (err) throw err;
-        if (req.user._id !== dish.comments.author)
-        for (var i = (dish.comments.length - 1); i >= 0; i--) {
-            dish.comments.id(dish.comments[i]._id).remove();
+        if (req.user._id !== product.comments.author)
+        for (var i = (product.comments.length - 1); i >= 0; i--) {
+            product.comments.id(product.comments[i]._id).remove();
         }
 
-        dish.save(function (err, result) {
+        product.save(function (err, result) {
             if (err) throw err;
             res.writeHead(200, {
                 'Content-Type': 'text/plain'
@@ -139,12 +139,12 @@ productRouter.route('/:Id/comments/:commentId')
             res.json(dish.comments.id(req.params.commentId));
         }
         else if (dish == null) {
-            err = new Error(' ' + req.params.dishId + ' not found');
+            err = new Error(' not found');
             err.status = 404;
             return next(err);
         }
         else {
-            err = new Error('Comment ' + req.params.commentId + ' not found');
+            err = new Error('Comment  not found');
             err.status = 404;
             return next(err);            
         }
@@ -174,12 +174,12 @@ productRouter.route('/:Id/comments/:commentId')
             }, (err) => next(err));
         }
         else if (dish == null) {
-            err = new Error('Dish ' + req.params.dishId + ' not found');
+            err = new Error('not found');
             err.status = 404;
             return next(err);
         }
         else {
-            err = new Error('Comment ' + req.params.commentId + ' not found');
+            err = new Error('not found');
             err.status = 404;
             return next(err);            
         }
@@ -189,11 +189,11 @@ productRouter.route('/:Id/comments/:commentId')
 
 .delete(cors.corsWithOptions, function (req, res, next) {
     Product.findById(req.params.Id)
-    .then((dish) => {
-        if (dish != null && dish.comments.id(req.params.commentId) != null) {
+    .then((product) => {
+        if (product != null && product.comments.id(req.params.commentId) != null) {
 
-            dish.comments.id(req.params.commentId).remove();
-            dish.save()
+            product.comments.id(req.params.commentId).remove();
+            product.save()
             .then((dish) => {
                 Product.findById(dish._id)
                 .populate('comments.author')
@@ -205,12 +205,12 @@ productRouter.route('/:Id/comments/:commentId')
             }, (err) => next(err));
         }
         else if (dish == null) {
-            err = new Error('Dish ' + req.params.dishId + ' not found');
+            err = new Error('not found');
             err.status = 404;
             return next(err);
         }
         else {
-            err = new Error('Comment ' + req.params.commentId + ' not found');
+            err = new Error('not found');
             err.status = 404;
             return next(err);            
         }
