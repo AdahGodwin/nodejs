@@ -32,7 +32,7 @@ router.delete("/:Id", cors.corsWithOptions, authenticate.verifyUser, authenticat
 });
 
 router.post('/signup', cors.corsWithOptions, function(req, res) {
-    User.register(new User({ username : req.body.username }),
+    User.register(new User({ email : req.body.email }),
         req.body.password, function(err, user) {
         if (err) {
             return res.status(500).json({err: err});
@@ -45,6 +45,9 @@ router.post('/signup', cors.corsWithOptions, function(req, res) {
         }
         if(req.body.address) {
             user.address = req.body.address;
+        }
+        if(req.body.mobileNumber) {
+            user.mobileNumber = req.body.mobileNumber;
         }
                 user.save(function(err,user) {
             passport.authenticate('local')(req, res, function () {
