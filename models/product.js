@@ -30,11 +30,11 @@ var productSchema = new Schema({
         type: String,
         required: true
     },
-    storeId: {
+    farmId: {
         type: String,
         required: true
     },
-    storeName: {
+    farmName: {
         type: String,
         required: true
     },
@@ -62,9 +62,7 @@ var productSchema = new Schema({
         type: Number
     }
     
-}, {
-    timestamps: true
-});
+},);
 
 // the schema is useless so far
 // we need to create a model using it
