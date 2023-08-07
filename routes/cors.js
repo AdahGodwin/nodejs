@@ -2,12 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-const whitelist = [
-    'http://localhost:4200',
-    'http://localhost:5174',
-    'http://localhost:5173',
-    'https://cypherstore.netlify.app',
-    'https://groffy-store.netlify.app',];
+const whitelist = ['http://localhost:4200', 'https://cypherstore.netlify.app', 'https://groffy-store.netlify.app'];
 
 var corsOptionsDelegate = (req, callback) => {
     var corsOptions;
@@ -17,7 +12,7 @@ var corsOptionsDelegate = (req, callback) => {
         };
     }
     else {
-        corsOptions = { origin: false };
+        corsOptions = { origin: false};
     }
     callback(null, corsOptions);
 };

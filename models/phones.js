@@ -17,22 +17,23 @@ var commentSchema = new Schema({
         type: String,
         required: true
     },
-     author:  {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+    author:  {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true
 });
 
 // create a schema
-var productSchema = new Schema({
+var phoneSchema = new Schema({
     name: {
         type: String,
         required: true
     },
     description: {
-        type: String
+        type: String,
+        required: true
     },
     rating: {
         type: Number
@@ -61,7 +62,7 @@ var productSchema = new Schema({
 
 // the schema is useless so far
 // we need to create a model using it
-var Product = mongoose.model('Product', productSchema);
+var Phones = mongoose.model('Phone', phoneSchema);
 
 // make this available to our Node applications
-module.exports = Product;
+module.exports = Phones;
